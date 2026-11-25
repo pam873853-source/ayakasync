@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>{% block title %}Ayaka Sync{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script defer src="{{ url_for('static', filename='js/app.js') }}"></script>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="{{ url_for('home') }}"><span class="brand-mark">❄</span><span>Ayaka <b>Sync</b></span></a>
+  <button class="mobile-menu" id="mobileMenu" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <div class="system-widgets" aria-label="Informasi perangkat">
+    <div class="system-widget"><small>JAM</small><b id="liveClock">--:--:--</b></div>
+    <div class="system-widget"><small>TANGGAL</small><b id="liveDate">-- --- ----</b></div>
+    <div class="system-widget battery-widget"><small>BATERAI</small><b><span id="batteryIcon">▰</span> <span id="batteryLevel">--%</span></b></div>
+    <div class="system-widget"><small>UPTIME SESI</small><b id="sessionUptime">00:00:00</b></div>
+  </div>
+  <nav class="top-actions">
+    <button class="icon-btn" id="themeToggle" aria-label="Ganti tema">◐</button>
+    {% if me %}<a class="avatar" href="{{ url_for('profile') }}" aria-label="Profil Ayaka">❄</a>{% else %}<a class="btn btn-small btn-outline" href="{{ url_for('login') }}">Login</a>{% endif %}
+  </nav>
+</header>
+<div class="shell">
+  <aside class="sidebar" id="sidebar" aria-label="Navigasi utama">
+    <div class="side-label">MENU UTAMA</div>
+    <a href="{{ url_for('dashboard') if me else url_for('home') }}">⌂ <span>Home</span></a>
+    <a href="{{ url_for('activation') if me else url_for('login') }}">✧ <span>Aktivasi</span></a>
+    <a href="{{ url_for('plans_page') if me else url_for('login') }}">◇ <span>Plan</span></a>
+    <a href="{{ url_for('profile') if me else url_for('login') }}">◎ <span>Profil</span></a>
+    <button type="button" class="sidebar-chat-link" id="openAyakaChat">✦ <span>Chat AI · Ayaka Sync</span></button>
+    {% if me %}
+    <form action="{{ url_for('redeem') }}" method="post" class="redeem-mini">
+      <div class="side-label">REDEEM KODE</div><input name="code" placeholder="Kode AYK..." required><button class="btn btn-small">Redeem</button>
+    </form>
+    {% if me.is_admin %}<div class="side-label">ADMIN</div><a href="{{ url_for('admin') }}">⚙ <span>Admin Panel</span></a>{% endif %}
+    <a href="{{ url_for('logout') }}" class="logout">↗ <span>Logout</span></a>
+    {% else %}
+    <div class="side-label">AKUN</div>
+    <a href="{{ url_for('login') }}">↗ <span>Login</span></a>
+    <a href="{{ url_for('register') }}">＋ <span>Register</span></a>
+    {% endif %}
+  </aside>
+  <main class="main-content {% if not me %}full{% endif %}">
+    {% if not me %}<div class="notice-banner"><b>INFO AKTIVASI:</b> Disarankan menggunakan email sementara (temp email) sesuai panduan layanan. Jika ragu atau tidak nyaman, gunakan email pribadi milik sendiri dan pahami risiko serta ketentuan penyedia layanan terlebih dahulu.</div>{% endif %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}<div class="flash-wrap">{% for category,message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+    <footer>© 2026 Ayaka Sync · Built with care <span>❄</span></footer>
+  </main>
+</div>
+
+<nav class="bottom-floating-nav" aria-label="Navigasi bawah">
+  <a class="{% if request.endpoint in ['home','dashboard'] %}active{% endif %}" href="{{ url_for('dashboard') if me else url_for('home') }}"><span class="bottom-nav-icon">⌂</span><small>Home</small></a>
+  <a class="{% if request.endpoint in ['activation','activation_submit'] %}active{% endif %}" href="{{ url_for('activation') if me else url_for('login') }}"><span class="bottom-nav-icon">✧</span><small>Aktivasi</small></a>
+  <a class="{% if request.endpoint in ['plans_page','payment'] %}active{% endif %}" href="{{ url_for('plans_page') if me else url_for('login') }}"><span class="bottom-nav-icon">◇</span><small>Plan</small></a>
+  <a class="{% if request.endpoint == 'profile' %}active{% endif %}" href="{{ url_for('profile') if me else url_for('login') }}"><span class="bottom-nav-icon">◎</span><small>Profil</small></a>
+</nav>
+
+<section class="ayaka-chat-modal" id="ayakaChatModal" aria-hidden="true" aria-label="Chat Ayaka Sync">
+  <div class="ayaka-chat-window" role="dialog" aria-modal="true" aria-labelledby="ayakaChatTitle">
+    <header class="ayaka-chat-header">
+      <div class="ayaka-chat-avatar">❄</div>
+      <div><b id="ayakaChatTitle">Ayaka Sync</b><small><span class="chat-online-dot"></span> Ayaka AI · Siap menemani</small></div>
+      <button type="button" class="ayaka-chat-close" id="closeAyakaChat" aria-label="Tutup chat">×</button>
+    </header>
+    <div class="ayaka-chat-messages" id="ayakaChatMessages" aria-live="polite">
+      <div class="chat-bubble assistant">Halo! Aku Ayaka AI, asisten resmi Ayaka Sync. Mau ngobrol, curhat, atau butuh bantuan? Gas aja, aku siap nemenin kamu 😄</div>
+    </div>
+    <form class="ayaka-chat-compose" id="ayakaChatForm">
+      <input id="ayakaChatInput" type="text" maxlength="2000" placeholder="Tulis pesan ke Ayaka..." autocomplete="off" required>
+      <button type="submit" id="ayakaChatSend" aria-label="Kirim pesan">➤</button>
+    </form>
+    <p class="ayaka-chat-disclaimer">Jawaban AI bisa saja kurang tepat. Jangan kirim kata sandi atau data sensitif.</p>
+  </div>
+</section>
+</body></html>

@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}{{ 'Login' if mode=='login' else 'Register' }} — Ayaka Sync{% endblock %}
+{% block content %}<section class="auth-wrap"><div class="auth-decoration">❄</div><form class="auth-card" method="post">
+<div class="eyebrow">AYAKA SYNC ACCOUNT</div><h1>{{ 'Welcome back.' if mode=='login' else 'Create account.' }}</h1><p>{{ 'Masuk untuk melanjutkan ke dashboard.' if mode=='login' else 'Daftar dan mulai dengan plan Free.' }}</p>
+{% if mode=='register' %}<label>Username</label><input name="username" required minlength="3" placeholder="Username"><label>Email</label><input type="email" name="email" required placeholder="email@example.com">{% else %}<label>Username atau Email</label><input name="identity" required placeholder="Username / email">{% endif %}
+<label>Password</label><input type="password" name="password" required minlength="8" placeholder="Minimal 8 karakter">
+<button class="btn full-btn">{{ 'Masuk ke dashboard' if mode=='login' else 'Buat akun' }} ↗</button>
+<div class="auth-switch">{% if mode=='login' %}Belum punya akun? <a href="{{ url_for('register') }}">Daftar</a>{% else %}Sudah punya akun? <a href="{{ url_for('login') }}">Login</a>{% endif %}</div>
+</form></section>{% endblock %}

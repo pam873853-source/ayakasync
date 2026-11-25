@@ -1,0 +1,34 @@
+{% extends "base.html" %}{% block title %}Home — Ayaka Sync{% endblock %}{% block content %}
+<section class="home-welcome">
+  <div class="welcome-copy">
+    <span class="eyebrow">AYAKA SYNC / PERSONAL HOME</span>
+    <p class="welcome-time" id="liveGreeting" data-name="{{ user.username|e }}">Selamat datang, {{ user.username|e }}.</p>
+    <h1>Senang melihatmu kembali.</h1>
+    <p class="welcome-subtitle">Semua kebutuhan aktivasi Alight Motion dan aktivitas akunmu ada di satu tempat.</p>
+    <div class="welcome-actions">
+      <a class="btn" href="{{ url_for('activation') }}">✧ Mulai Aktivasi</a>
+      <a class="btn btn-outline" href="{{ url_for('activation') }}#alight-motion-guide">❄ Jelajahi Website Aktivasi Alight Motion</a>
+    </div>
+  </div>
+  <div class="welcome-mark" aria-hidden="true"><span>❄</span><b>AYAKA<br>SYNC</b><small>WELCOME BACK</small></div>
+</section>
+<div class="page-heading home-section-heading"><div><span class="eyebrow">YOUR WORKSPACE</span><h2>Ringkasan akun</h2><p>Berikut status akun dan limit yang tersedia saat ini.</p></div><span class="plan-pill">{{ user.plan|upper }} PLAN</span></div>
+<div class="stats-grid">
+  <div class="stat-card"><small>PLAN AKTIF</small><strong>{{ user.plan|upper }}</strong><span>Membership kamu</span></div>
+  <div class="stat-card"><small>SISA LIMIT</small><strong>{{ user.remaining_limit }}</strong><span>Kuota aktivasi tersedia</span></div>
+  <div class="stat-card"><small>AKSES BULK</small><strong>{{ 'ON' if user.plan!='free' else 'OFF' }}</strong><span>{{ 'Tersedia' if user.plan!='free' else 'Upgrade plan untuk membuka' }}</span></div>
+</div>
+<section class="home-feature-panel">
+  <div class="home-feature-copy"><span class="eyebrow">ALIGHT MOTION / ACTIVATION</span><h2>Siap mengaktifkan akunmu?</h2><p>Masuk ke halaman aktivasi untuk membuat Order ID otomatis atau mengisi Order ID secara manual. Baca petunjuk sebelum mengirim permintaan.</p><a class="btn" href="{{ url_for('activation') }}">Buka Aktivasi Alight Motion ↗</a></div>
+  <div class="home-feature-icon">AM<span>✦</span></div>
+</section>
+<div class="content-grid">
+  <section class="panel"><div class="panel-head"><h2>Akses cepat</h2><span>✦</span></div><div class="quick-grid">
+    <a href="{{ url_for('activation') }}">✧<b>Aktivasi</b><small>Mulai permintaan</small></a>
+    <a href="{{ url_for('plans_page') }}">◇<b>Plan</b><small>Lihat benefit</small></a>
+    <a href="{{ url_for('profile') }}">◎<b>Profil</b><small>Atur API key</small></a>
+  </div></section>
+  <section class="panel"><div class="panel-head"><h2>Riwayat pembayaran</h2></div>{% for p in payments %}<div class="history-row"><div><b>{{ p.plan|upper }}</b><small>Rp{{ "{:,}".format(p.amount).replace(",",".") }}</small></div><span class="status {{ p.status }}">{{ p.status }}</span></div>{% else %}<p class="muted">Belum ada transaksi.</p>{% endfor %}</section>
+</div>
+<section class="panel terminal"><div class="panel-head"><h2>Activity stream</h2><span class="live-dot">● LIVE LOG</span></div>{% for l in logs %}<div class="log-row"><code>[{{ l.kind }}]</code><span>{{ l.message }}</span><small>{{ l.created_at.strftime('%d/%m %H:%M') }}</small></div>{% else %}<p class="muted">Belum ada aktivitas. Aktivitas baru akan muncul di sini.</p>{% endfor %}</section>
+{% endblock %}

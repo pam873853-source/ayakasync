@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}Ayaka Sync — Panduan Aktivasi{% endblock %}
+{% block content %}
+<section class="hero neo-hero" id="home">
+  <div class="hero-copy reveal">
+    <div class="eyebrow"><span class="pulse"></span> AYAKA SYNC / DIGITAL WORKSPACE</div>
+    <div class="hero-kicker">ICE COLD UI · CLEAR WORKFLOW</div>
+    <h1>Selamat datang<br>di <em>Ayaka Aktivasi.</em></h1>
+    <p>Tempat mengajukan dan memantau permintaan aktivasi akun dengan panduan yang jelas. Mulai dari persiapan, pengiriman bukti, sampai pemeriksaan status dalam satu workspace.</p>
+    <div class="hero-buttons">
+      <a class="btn" href="{{ url_for('dashboard') if me else url_for('register') }}">{{ 'Buka Home' if me else 'Buat Akun' }} ↗</a>
+      <a class="btn btn-outline" href="#tutorial-aktivasi">Baca Tutorial ↓</a>
+    </div>
+    <div class="hero-stats">
+      <div><b>01 /</b><small>Siapkan akun</small></div>
+      <div><b>02 /</b><small>Kirim permintaan</small></div>
+      <div><b>03 /</b><small>Tunggu verifikasi</small></div>
+    </div>
+  </div>
+  <div class="hero-art reveal" aria-label="Ayaka Sync ice themed illustration">
+    <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+    <div class="ayaka-emblem"><div class="emblem-snow">❄</div><div class="emblem-small">KAMISATO</div><strong>AYAKA</strong><span>FROSTBORN · SYNCED</span></div>
+    <div class="floating-tag tag-one">✦ FRONTEND</div>
+    <div class="floating-tag tag-two">⌘ BACKEND</div>
+    <div class="floating-tag tag-three">◈ DATABASE</div>
+  </div>
+</section>
+
+<section class="quick-guide no-section-heading" id="mulai">
+  <div class="guide-grid">
+    <article class="guide-card"><span class="step-no">01</span><div class="guide-icon">✉</div><h3>Siapkan email</h3><p>Gunakan email yang bisa kamu akses. Jika layanan memang mensyaratkan email sementara, pahami masa aktif dan risikonya. Jika ragu, gunakan email pribadi milik sendiri.</p></article>
+    <article class="guide-card"><span class="step-no">02</span><div class="guide-icon">▤</div><h3>Lengkapi akun</h3><p>Daftar atau login ke Ayaka Sync. Lengkapi nama, username, dan foto profil sesuai informasi yang benar.</p></article>
+    <article class="guide-card"><span class="step-no">03</span><div class="guide-icon">▣</div><h3>Siapkan screenshot</h3><p>Siapkan screenshot yang diminta. Pastikan gambar jelas, tidak buram, tidak terpotong, dan tidak memperlihatkan data sensitif yang tidak diperlukan.</p></article>
+    <article class="guide-card"><span class="step-no">04</span><div class="guide-icon">❄</div><h3>Kirim sekali</h3><p>Masuk ke menu Aktivasi, periksa data, lalu kirim permintaan satu kali. Tunggu sampai notifikasi dan status muncul.</p></article>
+  </div>
+</section>
+
+<section class="tutorial-section no-section-heading" id="apa-itu-aktivasi">
+  <article class="content-card">
+    <p>Aktivasi adalah proses untuk mengaktifkan akun kamu di Ayaka Sync. Setelah akun kamu aktif, kamu baru bisa pakai semua fitur di dalam web, generate website, dan publish hasil kamu.</p>
+    <p>Tanpa aktivasi, akun kamu masih terkunci dan belum bisa dipakai full.</p>
+  </article>
+</section>
+
+<section class="tutorial-section no-section-heading" id="persiapan">
+  <div class="guide-grid two-col">
+    <article class="guide-card"><span class="step-no">01</span><h3>Akun sudah terdaftar</h3><p>Pastikan kamu sudah daftar akun Ayaka Sync pakai Email atau Google yang aktif. Akun yang belum daftar tidak bisa diajukan aktivasi.</p></article>
+    <article class="guide-card"><span class="step-no">02</span><h3>Data diri lengkap</h3><p>Lengkapi profil kamu: Nama Lengkap, Username, dan Foto Profil. Akun dengan profil kosong akan ditolak otomatis.</p></article>
+    <article class="guide-card"><span class="step-no">03</span><h3>Screenshot bukti</h3><p>Siapkan screenshot bukti sesuai yang diminta admin. Pastikan screenshotnya jelas, tidak buram, dan tidak terpotong.</p></article>
+    <article class="guide-card"><span class="step-no">04</span><h3>Koneksi stabil</h3><p>Pastikan internet kamu stabil saat kirim permintaan. Jangan kirim berkali-kali kalau loading, tunggu sampai muncul notif berhasil.</p></article>
+  </div>
+</section>
+
+<section class="tutorial-section no-section-heading" id="tutorial-aktivasi">
+  <div class="tutorial-list">
+    <details class="tutorial-item" open><summary><span>01</span> Langkah 1: Login ke akun kamu</summary><div><p>Login pakai akun yang mau kamu aktifkan.</p></div></details>
+    <details class="tutorial-item"><summary><span>02</span> Langkah 2: Masuk ke menu Aktivasi</summary><div><p>Klik menu Aktivasi yang ada di dashboard.</p></div></details>
+    <details class="tutorial-item"><summary><span>03</span> Langkah 3: Isi form aktivasi</summary><div><p>Isi semua kolom yang diminta dengan benar dan jujur. Jangan pakai data palsu.</p></div></details>
+    <details class="tutorial-item"><summary><span>04</span> Langkah 4: Upload bukti & kirim</summary><div><p>Upload bukti yang sudah kamu siapkan tadi, lalu klik tombol Kirim Permintaan Aktivasi.</p></div></details>
+    <details class="tutorial-item"><summary><span>05</span> Langkah 5: Tunggu verifikasi admin</summary><div><p>Admin akan cek permintaan kamu. Biasanya diproses dalam 5 - 30 menit di jam kerja. Kamu bisa cek statusnya di menu yang sama.</p></div></details>
+  </div>
+</section>
+
+<section class="tutorial-section no-section-heading" id="status-aktivasi">
+  <div class="status-grid">
+    <article class="status-card pending-card"><span class="status status-pending">MENUNGGU</span><h3>Status: Menunggu</h3><p>Artinya permintaan kamu sudah masuk antrian dan lagi nunggu dicek admin. Jangan kirim ulang.</p></article>
+    <article class="status-card active-card"><span class="status status-active">DITERIMA / AKTIF</span><h3>Status: Diterima / Aktif</h3><p>Selamat, akun kamu sudah aktif. Silahkan refresh halaman dan kamu sudah bisa pakai semua fitur.</p></article>
+    <article class="status-card rejected-card"><span class="status status-rejected">DITOLAK</span><h3>Status: Ditolak</h3><p>Artinya ada data yang kurang atau tidak sesuai. Baca alasan penolakannya, benerin datanya, lalu kirim ulang permintaan.</p></article>
+  </div>
+</section>
+
+<section class="tutorial-section no-section-heading" id="alasan-ditolak">
+  <article class="content-card">
+    <ul class="reason-list">
+      <li>Data yang diisi tidak lengkap</li>
+      <li>Foto / screenshot buram atau terpotong</li>
+      <li>Menggunakan data palsu</li>
+      <li>Mengirim permintaan berkali-kali dalam waktu dekat</li>
+      <li>Akun terdeteksi duplikat / akun ganda</li>
+    </ul>
+    <p>Kalau ditolak, jangan panik. Benerin aja yang salah, terus ajukan ulang.</p>
+  </article>
+</section>
+
+<section class="tutorial-section no-section-heading" id="faq">
+  <div class="tutorial-list">
+    <details class="tutorial-item"><summary><span>Q1</span> Berapa lama proses aktivasinya?</summary><div><p>Biasanya 5 - 30 menit di jam kerja. Kalau diluar jam kerja, akan diproses besok paginya.</p></div></details>
+    <details class="tutorial-item"><summary><span>Q2</span> Saya sudah kirim tapi statusnya masih menunggu terus, kenapa?</summary><div><p>Artinya antrian lagi rame. Jangan kirim ulang, karena kirim ulang malah bikin antrian kamu ke-reset dari awal.</p></div></details>
+    <details class="tutorial-item"><summary><span>Q3</span> Kalau ditolak apakah bisa ajukan lagi?</summary><div><p>Bisa. Baca dulu alasan penolakannya, benerin datanya, lalu kirim ulang.</p></div></details>
+    <details class="tutorial-item"><summary><span>Q4</span> Apakah aktivasi dipungut biaya?</summary><div><p>Tidak. Aktivasi di Ayaka Sync gratis, tidak ada biaya apapun.</p></div></details>
+    <details class="tutorial-item"><summary><span>Q5</span> Saya lupa data apa yang saya kirim, gimana ceknya?</summary><div><p>Masuk ke menu Aktivasi, di sana ada riwayat dan status permintaan kamu.</p></div></details>
+  </div>
+</section>
+
+<section class="cta-strip" id="kirim-aktivasi">
+  <p class="muted">Siapin datanya, ikuti urutannya, kirim sekali aja, dan tunggu admin verifikasi.</p>
+  <a class="btn" href="{{ url_for('activation') if me else url_for('login') }}">Kirim Permintaan Aktivasi Sekarang ↗</a>
+</section>
+
+<section class="tutorial-section no-section-heading" id="footer-info">
+  <article class="content-card footer-info">
+    <h3>Ayaka Sync - Dibuat dengan cinta di Indonesia</h3>
+    <p>Instagram: <b>@ayakasync</b></p>
+    <p>Email: <a href="mailto:olpieditz336@gmail.com">olpieditz336@gmail.com</a></p>
+    <p>© 2026 Ayaka Sync. All Rights Reserved.</p>
+  </article>
+</section>
+{% endblock %}

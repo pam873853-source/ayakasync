@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block title %}Plans — Ayaka Sync{% endblock %}{% block content %}
+<div class="page-heading"><div><span class="eyebrow">MEMBERSHIP</span><h1>Pilih plan kamu.</h1><p>Limit Free tidak di-reset otomatis ketika habis.</p></div></div>
+<div class="plans-grid">
+{% for key,p in plans.items() %}<article class="plan-card {% if key=='pro' %}featured{% endif %}"><span class="eyebrow">{{ p.name|upper }}</span><h2>{% if p.price==0 %}Gratis{% else %}Rp{{ "{:,}".format(p.price).replace(",",".") }}{% endif %}<small>{% if p.price %}/ sekali bayar{% endif %}</small></h2><div class="plan-limit">{{ "{:,}".format(p.limit).replace(",",".") }} <span>total limit</span></div><ul><li>✓ Dashboard member</li><li>✓ Menu aktivasi</li><li>{{ '✓' if p.bulk else '—' }} Akses menu Bulk</li><li>✓ Riwayat aktivitas</li></ul>{% if key=='free' %}<button class="btn btn-outline full-btn" disabled>Plan dasar</button>{% else %}<a class="btn full-btn" href="{{ url_for('payment',plan=key) }}">Pilih {{ p.name }} ↗</a>{% endif %}</article>{% endfor %}
+</div>{% endblock %}

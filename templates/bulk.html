@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block title %}Bulk — Ayaka Sync{% endblock %}{% block content %}
+<div class="page-heading"><div><span class="eyebrow">BULK WORKSPACE</span><h1>Bulk generator.</h1><p>Untuk akun atau lisensi yang disediakan provider resmi dan berizin.</p></div></div>
+<section class="panel bulk-panel"><div class="bulk-count"><button type="button" id="minus">−</button><strong id="count">1</strong><button type="button" id="plus">+</button></div><p class="muted">Jumlah permintaan (maksimum 20 per batch).</p><button class="btn" id="bulkSubmit">Buat permintaan bulk ↗</button><div id="bulkResult" class="muted"></div><p class="tiny-note">Provider API belum dikonfigurasi. Endpoint pihak ketiga tidak dipanggil otomatis.</p></section>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{let n=1;const c=document.getElementById('count');document.getElementById('minus').onclick=()=>{n=Math.max(1,n-1);c.textContent=n};document.getElementById('plus').onclick=()=>{n=Math.min(20,n+1);c.textContent=n};document.getElementById('bulkSubmit').onclick=async()=>{const f=new FormData();f.append('count',n);const r=await fetch('{{ url_for("bulk_submit") }}',{method:'POST',body:f});const j=await r.json();document.getElementById('bulkResult').textContent=j.message||j.error}})</script>
+{% endblock %}
